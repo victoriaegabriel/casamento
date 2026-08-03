@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do Sim ao Sofá</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.18);
+            --glass-border: rgba(255, 255, 255, 0.35);
+            --text-color: #2c3e50;
+            --accent-color: #a3b8b0; 
+            --accent-dark: #7a8d87;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            background: url('https://i.ibb.co/Q7njTCBj/Whats-App-Image-2026-01-16-at-21-49-08.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex; justify-content: center; padding: 40px 20px; color: var(--text-color);
+        }
+
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); z-index: -1;
+        }
+
+        .container {
+            width: 100%; max-width: 1000px; background: var(--glass-bg);
+            backdrop-filter: blur(25px); border: 1px solid var(--glass-border);
+            border-radius: 40px; padding: 60px 40px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            text-align: center; position: relative;
+            padding-bottom: 250px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+                padding-bottom: 140px;
+            }
+            
+            .monograma-container {
+                bottom: 15px !important;
+                right: auto !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+            }
+            
+            .monograma-container img {
+                width: 100px !important;
+                height: 100px !important;
+            }
+        }
+
+        h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; color: #333; }
+        .intro-box {
+            text-align: justify;
+            border: 1px solid var(--glass-border);
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        .subtitle { font-weight: 300; letter-spacing: 4px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 50px; }
+
+        .tabs-nav { display: flex; justify-content: center; gap: 40px; margin-bottom: 60px; }
+        .tab-btn { background: none; border: none; font-size: 1rem; cursor: pointer; padding: 10px 0; color: var(--text-color); border-bottom: 2px solid transparent; opacity: 0.5; transition: 0.4s; }
+        .tab-btn.active { border-bottom: 2px solid var(--accent-color); opacity: 1; font-weight: 600; }
+
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.8s ease; }
+
+        .gift-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
+
+        .gift-card {
+            background: rgba(255, 255, 255, 0.25); 
+            border: 1px solid var(--glass-border);
+            border-radius: 25px; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column;
+            min-height: 220px;
+            transition: 0.4s; 
+            position: relative;
+        }
+        .gift-image { 
+            width: 100%; 
+            height: 200px;
+            object-fit: contain;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+        }
+        .gift-content { 
+            padding: 15px; 
+            display: flex; 
+            flex-direction: column; 
+            flex-grow: 1; 
+            text-align: left; 
+            justify-content: space-between;
+        }        
+        .gift-name { font-weight: 600; font-size: 1rem; }
+        .gift-desc { font-size: 0.75rem; opacity: 0.7; margin-bottom: 10px; }
+        .gift-footer { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-top: auto; 
+        }
+        .gift-price { 
+            font-weight: 600; 
+        }
+        .gift-buttons { 
+            display: flex; 
+            gap: 5px; 
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        .btn-nav {
+            flex: 1;
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 10px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .btn-nav:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+        .btn-maps { background-color: #4285F4; }
+        .btn-waze { background-color: #33CCFF; }
+        .btn-nav:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-gift {
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-gift:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .btn-del { background: #e57373; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; position: absolute; top: 10px; right: 10px; display: none; }
+        .add-card { border: 2px dashed var(--accent-color); display: none; justify-content: center; align-items: center; cursor: pointer; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 30px; border-radius: 30px; width: 90%; max-width: 400px; text-align: center; }
+        
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border-radius: 10px; border: 1px solid #ddd; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body id="bodyTag">
+
+<div class="container">
+
+    <div class="monograma-container" style="position: absolute; bottom: 20px; right: 30px;">
+        <img src="https://i.ibb.co/Vs7F0TT/Untitled-removebg-preview.png" alt="Monograma" style="width: 180px; height: 180px; object-fit: contain; opacity: 1;">
+    </div>
+    
+    <h1>Do Sim ao Sofá</h1>
+    <div class="intro-box">
+        <p>Vamos oficializar o nosso sim e começar uma nova fase juntos. Esse dia será para celebrar, ao lado de quem amamos, a nossa união e o início da vida a dois. </p>
+            <p>Os presentes seguem o clima de chá de casa nova, pra nos ajudar a montar nosso cantinho. Vem brindar, rir, aproveitar e fazer parte desse começo com a gente! 💚</p>
+    </div>
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab(event, 'local')">Local e Dia</button>
+        <button class="tab-btn" onclick="openTab(event, 'confirmacao')">Confirmar Presença</button>
+        <button class="tab-btn" onclick="openTab(event, 'presentes')">Lista de Presentes</button>
+    </div>
+
+    <div id="local" class="section active">
+        <div style="background: rgba(255,255,255,0.2); padding: 40px; border-radius: 30px; border: 1px solid var(--glass-border); max-width: 500px; margin: 0 auto;">
+            <h2 style="font-family: 'Playfair Display'; margin-bottom: 20px;">Esperamos por você</h2>
+            <p><strong>Dia 14 de Março de 2026</strong></p>
+            <p><strong>Sábado • 16:00h</strong></p>
+            <br>
+            <p>Rua Manoel Lourenço dos Santos, 300</p>
+            <p>Tauape • Salão de Festas</p>
+
+            <div class="nav-buttons">
+                <a href="https://www.google.com/maps/search/?api=1&query=Rua+Manoel+Lourenço+dos+Santos+300+Tauape+Fortaleza" 
+                   target="_blank" class="btn-nav">
+                   Abrir no Maps
+                </a>
+                <a href="https://waze.com/ul?q=Rua+Manoel+Lourenço+dos+Santos+300+Tauape+Fortaleza&navigate=yes" 
+                   target="_blank" class="btn-nav">
+                   Abrir no Waze
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="presentes" class="section">
+        <div class="gift-grid" id="giftGrid">
+            <div class="gift-card add-card" onclick="openAddModal()">
+                <span>+ Novo Item</span>
+            </div>
+        </div>
+        <button id="exportBtn" style="display:none; margin-top: 30px; padding: 10px; background: #333; color: white; border-radius: 10px; cursor: pointer;" onclick="exportList()">Gerar Código da Lista (JSON)</button>
+    </div>
+    <div id="confirmacao" class="section">
+        <div style="background: rgba(255,255,255,0.2); padding: 40px; border-radius: 30px; border: 1px solid var(--glass-border); max-width: 600px; margin: 0 auto;">
+            <h2 style="font-family: 'Playfair Display'; margin-bottom: 20px;">Confirme sua Presença</h2>
+            <p style="margin-bottom: 30px; line-height: 1.6;">
+                Sua presença é muito importante para nós! Por favor, confirme até <strong>7 de Março</strong> para nos ajudar com a organização.
+            </p>
+            <a href="https://forms.gle/3DM7qM9oSxuRwhaM8" target="_blank" 
+               style="display: inline-block; background: var(--accent-color); color: white; padding: 15px 40px; border-radius: 15px; text-decoration: none; font-weight: 600; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"
+               onmouseover="this.style.background='var(--accent-dark)'; this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.background='var(--accent-color)'; this.style.transform='translateY(0)'">
+                Preencher Confirmação
+            </a>
+            <p style="margin-top: 20px; font-size: 0.85rem; opacity: 0.7;">
+                O formulário abre em uma nova janela
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="addModal" class="modal">
+    <div class="modal-content">
+        <h3>Adicionar Presente</h3>
+        <input type="text" id="inName" placeholder="Nome do Item">
+        <textarea id="inDesc" placeholder="Descrição"></textarea>
+        <input type="number" id="inPrice" placeholder="Preço (R$)">
+        <input type="text" id="inImg" placeholder="Link da Imagem">
+        <input type="text" id="Linkcartao" placeholder="Link do cartão">
+        <button class="btn-gift" style="width: 100%" onclick="saveGift()">Salvar</button>
+        <p onclick="closeModal('addModal')" style="cursor:pointer; margin-top:10px">Cancelar</p>
+    </div>
+</div>
+
+<div id="pixModal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalGiftName"></h3>
+        <div id="qrcode" style="display: flex; justify-content: center; margin: 15px 0;"></div>
+        <p id="pixCode" style="font-size: 0.6rem; word-break: break-all; background: #f4f4f4; padding: 10px; border-radius: 10px;"></p>
+        <button class="btn-gift" style="width: 100%" onclick="copyPix()">Copiar Código</button>
+        <p onclick="closeModal('pixModal')" style="cursor:pointer; margin-top:10px">Fechar</p>
+    </div>
+</div>
+
+<div id="cartaoModal" class="modal">
+    <div class="modal-content">
+        <h3 id="cartaoGiftName" style="margin-bottom: 10px;"></h3>
+        <p style="font-size: 0.9rem; margin-bottom: 20px;">Você será redirecionado para o pagamento seguro via PicPay.</p>
+        
+        <a id="btnLinkCartao" href="#" target="_blank" class="btn-gift" style="width: 100%; display: block; font-size: 1rem; margin-bottom: 15px;">Ir para Pagamento</a>
+        
+        <p style="font-size: 0.7rem; color: #999; margin-bottom: 5px;">Ou copie o link:</p>
+        <p id="txtLinkCartao" style="font-size: 0.6rem; word-break: break-all; background: #f4f4f4; padding: 10px; border-radius: 10px; color: #666;"></p>
+        
+        <p onclick="closeModal('cartaoModal')" style="cursor:pointer; margin-top:20px; text-decoration: underline; font-size: 0.8rem;">Voltar</p>
+    </div>
+</div>
+
+<script>
+    let gifts = [
+              {
+                "name": "Taças de agua",
+                "desc": "Jogo De 6 Taças Caneladas Com Borda Dourada 260ml Graffiato",
+                "price": "75,50",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_815818-MLA95979660384_102025-F.webp",
+                "link_cartao": "https://mpago.la/2zPjKtQ"
+              },
+              {
+                "name": "Copos de cerveja",
+                "desc": "Jogo 12 Taças Cerveja Chopp 300ml Nadir Floripa Vidro",
+                "price": "78.9495",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_904751-MLA99934713555_112025-F.webp",
+                "link_cartao": "https://mpago.la/1Z54BuT"
+              },
+              {
+                "name": "Copos (taças simples)",
+                "desc": "Jogo De 6 Copos Versalhes Em Vidro Com Borda Dourada 420ml",
+                "price": "81.1125",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_990378-MLB100589476080_122025-F.webp",
+                "link_cartao": "https://mpago.la/1uYYpQe"
+              },
+              {
+                "name": "Tapete de banheiro",
+                "desc": "Kit 6 Tapetes Algodão Toalha Piso Banheiro Casa Linda Cinza 50x80cm",
+                "price": "81.1125",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_871249-MLA95662999124_102025-F.webp",
+                "link_cartao": "https://mpago.la/2qM13Mu"
+              },
+              {
+                "name": "Talheres",
+                "desc": "Faqueiro 24 Peças Luxo Jogo Talheres Em Aço Inox Tramontina Inox",
+                "price": "85.4385",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_809748-MLB54959760743_042023-F.webp",
+                "link_cartao": "https://mpago.la/123vbXV"
+              },
+              {
+                "name": "Cuscuzeira",
+                "desc": "Jogo Cozinha Exclusivo Cuscuzeira E Forma Assadeira Circular Granito Bege",
+                "price": "86.52",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_634339-MLB92141608337_092025-F.webp",
+                "link_cartao": "https://mpago.la/2zHMubs"
+              },
+              {
+                "name": "Cabides",
+                "desc": " Kit 50 Cabides Veludo De Roupa Cor Preto ",
+                "price": "89.7645",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_763576-MLA100658071454_122025-F.webp",
+                "link_cartao": "https://mpago.la/1eV2g75"
+              },
+              {
+                "name": "Conjunto de facas",
+                "desc": "Kit Facas Plenus Lâminas Aço Inox 10 Peças Preto Tramontina",
+                "price": "91.9275",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_796412-MLA99949684101_112025-F.webp]",
+                "link_cartao": "https://mpago.la/1q6Dvvx"
+              },
+              {
+                "name": "Garrafa térmica",
+                "desc": "Garrafa térmica Termolar Lúmina Bomba de Pressão 1L",
+                "price": "94.0905",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_612061-MLU70020198685_062023-F.webp",
+                "link_cartao": "https://mpago.la/1uK2E2e"
+              },
+              {
+                "name": "Lixeira Banheiro",
+                "desc": "Lixeira Inteligente 12L Automática Com Sensor Infravermelho Lixeiras Para Banheiro Lixeira Para Escritório À Prova D’Água Antiodor Lixeira Cozinha Branca",
+                "price": "107.0685",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_929254-MLA96877124656_112025-F.webp",
+                "link_cartao": "https://mpago.la/1eqaDGV"
+              },
+              {
+                "name": "Conchas e pegadores",
+                "desc": "Lumai Kit de Utensilios de Cozinha de Silicone Maciço Miami Premium - Conjunto com 10 Peças Livre de BPA - Jogo com Espatulas Pegador Conchas Colheres Batedor de Ovos - Tamanho Grande e Pegada Firme",
+                "price": "113.5575",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_777106-MLA99987036961_112025-F.webp",
+                "link_cartao": "https://mpago.la/1ZYHcLv"
+              },
+              {
+                "name": "Tapetes cozinha",
+                "desc": "Kit 3 Peças Tapetes E Passadeira Axia Luxo Tear Para Cozinha",
+                "price": "115.7205",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_649776-MLB85295145454_062025-F-kit-3-pecas-tapetes-e-passadeira-axia-luxo-tear-para-cozinha.webp",
+                "link_cartao": "https://mpago.la/2byeAXN"
+              },
+              {
+                "name": "Tapete de banheiro",
+                "desc": "Tapete De Pedra Diatomita 60x39 Cm Mágico Ultra Absorvente Secagem Rápida",
+                "price": "118.965",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_737084-MLA91355592208_092025-F.webp",
+                "link_cartao": "https://mpago.la/2wndAmp"
+              },
+              {
+                "name": "Taças Vinho",
+                "desc": "Jogo 6 Taças Cristal Titanium Vinho Tinto 580ml Cor Transparente",
+                "price": "122.2095",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_711465-MLA99495569954_112025-F.webp",
+                "link_cartao": "https://mpago.la/2HFjxC7"
+              },
+              {
+                "name": "Cesto de roupa",
+                "desc": "Cesto De Roupa Suja Bambu Natural Duplo Com Divisorias Grande Retangular Com Tampa",
+                "price": "127.617",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_763204-MLA95682045436_102025-F.webp",
+                "link_cartao": "https://mpago.la/1rsR3oD"
+              },
+              {
+                "name": "Potes plásticos ou de vidro",
+                "desc": "Kit 10 Potes Vidro 640ml Hermético Marmita Forno Refratário Star House",
+                "price": "129.78",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_851388-MLA99988740405_112025-F.webp",
+                "link_cartao": "https://mpago.la/2CEXLbX"
+              },
+              {
+                "name": "Fronhas",
+                "desc": "4 Fronhas 4 Abas Percal 600 Fios 100% Algodão Egípcio 50x70 Cor Branca Casablanca",
+                "price": "140.595",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_872617-MLA95666759276_102025-F.webp",
+                "link_cartao": "https://mpago.la/1UDqdxu"
+              },
+              {
+                "name": "Lixeira Cozinha",
+                "desc": "Lixeira Automática 20l Inteligente Com Sensor Infravermelho Branco",
+                "price": "151.41",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_715336-MLB103939889276_012026-F.webp",
+                "link_cartao": "https://mpago.la/1m8MCy2"
+              },
+              {
+                "name": "Travesseiros",
+                "desc": "4 Travesseiros Impermeável Antialérgico 50x70 Suporte Medio",
+                "price": "156.8175",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_736312-MLB81923369934_012025-F-4-travesseiros-impermeavel-antialergico-50x70-suporte-medio.webp",
+                "link_cartao": "https://mpago.la/2Wtzw7Y"
+              },
+              {
+                "name": "Taças Vinho",
+                "desc": "Jogo 6 Taças Cristal Ecológico Vinho 360ml",
+                "price": "165.4695",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_868095-MLA95711145726_102025-F.webp",
+                "link_cartao": "https://mpago.la/2yw4FKf"
+              },
+              {
+                "name": "Jogo de lençol",
+                "desc": "Jogo De Cama Queen 3 peças 160 Fios 100% Algodão Branco Karsten",
+                "price": "167.6325",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_841661-MLA95661910858_102025-F.webp",
+                "link_cartao": "https://mpago.la/2ukdXDN"
+              },
+              {
+                "name": "Liquidificador",
+                "desc": "Liquidificador Full 1400w 15 Velocidades Oliq610 Preto Oster",
+                "price": "182.7735",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_702461-MLA100061718683_122025-F.webp",
+                "link_cartao": "https://mpago.la/1oHpTTF"
+              },
+              {
+                "name": "Escorredor de pratos",
+                "desc": "Escorredor De Louça Bancada Secador Organizador Aço Inox Porta Talher Cor Preto 3 Andares",
+                "price": "183.855",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_689077-MLA103208300836_012026-F.webp",
+                "link_cartao": "https://mpago.la/11CDGLi"
+              },
+              {
+                "name": "Varal",
+                "desc": "Varal De Chao Roupa Grande Ordez Big Gigante 174cm 100% Aluminio",
+                "price": "189.2625",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_688680-MLA99483118988_112025-F.webp",
+                "link_cartao": "https://mpago.la/1ztqLVC"
+              },
+              {
+                "name": "Cobertor ou manta",
+                "desc": "Cobertor Manta Flannel Antialérgico King Queen 2,20 X 2,40",
+                "price": "192.507",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_750937-MLB97606501042_112025-F-cobertor-manta-flannel-antialergico-king-queen-220-x-240.webp",
+                "link_cartao": "https://mpago.la/12RvYqN"
+              },
+              {
+                "name": "Sanduicheira",
+                "desc": "Sanduicheira Grill em Inox WAP WS1000 2 em 1 com Abertura 180° e Coletor de Gordura Removível, Antiaderente 1000W",
+                "price": "194.67",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_803457-MLA83154630008_032025-F.webp",
+                "link_cartao": "https://mpago.la/1ZnDaVa"
+              },
+              {
+                "name": "Passadeira a vapor",
+                "desc": "Passadeira a Vapor Portátil Philco PVP10VD Bivolt",
+                "price": "202.2405",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_844344-MLA88000099162_072025-F.webp",
+                "link_cartao": "https://mpago.la/2K4d1tu"
+              },
+              {
+                "name": "Toalhas de banho",
+                "desc": "Jogo De Toalhas Buddemeyer Atena Fio Penteado Banho Cinza/cinza Claro 4 Peças",
+                "price": "205.485",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_856490-MLA95690222024_102025-F.webp",
+                "link_cartao": "https://mpago.la/1FdgonC"
+              },
+              {
+                "name": "Toalhas de banho",
+                "desc": "Jogo De Toalhas Banho Village Com 4 Peças Branco Buddemeyer",
+                "price": "209.811",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_986600-MLA99452726284_112025-F.webp",
+                "link_cartao": "https://mpago.la/2SuooYy"
+              },
+              {
+                "name": "Pratos ",
+                "desc": "Serviço de Jantar e Café 20 Peças em Porcelana",
+                "price": "266.049",
+                "image": "https://m.media-amazon.com/images/I/51O9L-VslEL._AC_SX679_.jpg",
+                "link_cartao": "https://mpago.la/25ZQd1s"
+              },
+              {
+                "name": "Ventilador",
+                "desc": "Ventilador Arno X-treme 9 Mesa 40cm Ve90",
+                "price": "270.375",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_686594-MLA99930624347_112025-F.webp",
+                "link_cartao": "https://mpago.la/2BSARfB"
+              },
+              {
+                "name": "Jogo de Edredom",
+                "desc": "Edredom Queen Size Dupla Face + Kit Jogo De Lençol 3 Peças",
+                "price": "276.864",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_848476-MLB86812222904_072025-F-kit-edredom-dupla-face-queen-jogo-de-lencol-luxo-4-pecas.webp",
+                "link_cartao": "https://mpago.la/1L9axog"
+              },
+              {
+                "name": "Toalhas de banho",
+                "desc": "Jogo De Toalhas Banho Gigante 4 Peças Lumina Karsten",
+                "price": "281.19",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_606569-MLB86284850101_062025-F-jogo-de-toalhas-banho-gigante-4-pecas-lumina-karsten.webp",
+                "link_cartao": "https://mpago.la/1qT5qYu"
+              },
+              {
+                "name": "Cafeteira",
+                "desc": "Cafeteira Elétrica Dolce Arome Digital, Mondial 800W - C-44-32X-SDI",
+                "price": "302.82",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_843695-MLA85364344205_052025-F.webp",
+                "link_cartao": "https://mpago.la/2cj6GYd"
+              },
+              {
+                "name": "Jogo de panelas",
+                "desc": "Jogo De Panelas Indução Mimo Style Cerâmica",
+                "price": "367.71",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_887247-MLA99984831157_112025-F.webp",
+                "link_cartao": "https://mpago.la/1v1pk3N"
+              },
+              {
+                "name": "Churrasqueira",
+                "desc": "Grill Redondo Mondial Cook & Grill 40 G-03",
+                "price": "378.525",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_687423-MLB104679101645_012026-F-grill-redondo-mondial-cook-grill-40-g-03.webp",
+                "link_cartao": "https://mpago.la/2iP3jmv"
+              },
+              {
+                "name": "Microondas",
+                "desc": "Micro-ondas Limpa Fácil Espelhado 1100W BMO28 Britania Preto/Branco",
+                "price": "471.534",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_870757-MLA96071796979_102025-F.webp",
+                "link_cartao": "https://mpago.la/2UqtiYF"
+              },
+              {
+                "name": "Gelagua",
+                "desc": "Bebedouro de água Esmaltec EGM30 Branco",
+                "price": "735.42",
+                "image": "https://http2.mlstatic.com/D_NQ_NP_2X_661898-MLA99479661648_112025-F.webp",
+                "link_cartao": "https://mpago.la/2aqNLpK"
+              }
+            ];
+
+    const localSaved = localStorage.getItem('myGifts');
+    if(localSaved && gifts.length === 0) {
+        gifts = JSON.parse(localSaved);
+    }
+
+    const MINHA_CHAVE_PIX = "57c272d8-5716-4d0b-9086-f653a08a1223";
+    const NOME_BENEFICIARIO = "João Pedro Moura Braga";
+    const CIDADE_BENEFICIARIO = "Fortaleza";
+    let isAdmin = false;
+
+    function renderGifts() {
+        const grid = document.getElementById('giftGrid');
+        grid.querySelectorAll('.gift-card:not(.add-card)').forEach(c => c.remove());
+
+        
+        gifts.forEach((g, i) => {
+            const card = document.createElement('div');
+            card.className = 'gift-card';
+            card.innerHTML = `<button class="btn-del" onclick="deleteGift(${i})">X</button>
+                <img src="${g.image}" class="gift-image">
+                <div class="gift-content">
+                    <p class="gift-name">${g.name}</p>
+                    <p class="gift-desc">${g.desc}</p>
+                    <div class="gift-footer">
+                        <span class="gift-price">R$ ${parseFloat(g.price).toFixed(2)}</span>
+                        <div class="gift-buttons">
+                            <button class="btn-gift" onclick="generatePixModal(${i})">Pix</button>
+                            <button class="btn-gift" onclick="generateCartaoModal(${i})">Cartão</button>
+                        </div>
+                    </div>
+                </div>`;
+            grid.prepend(card);
+        });
+    }
+
+    function saveGift() {
+        const g = {
+            name: document.getElementById('inName').value,
+            desc: document.getElementById('inDesc').value,
+            price: document.getElementById('inPrice').value,
+            image: document.getElementById('inImg').value,
+            link_cartao: document.getElementById('Linkcartao').value
+        };
+        gifts.push(g);
+        localStorage.setItem('myGifts', JSON.stringify(gifts));
+        renderGifts();
+        closeModal('addModal');
+    }
+
+    function deleteGift(i) {
+        gifts.splice(i, 1);
+        localStorage.setItem('myGifts', JSON.stringify(gifts));
+        renderGifts();
+    }
+
+    function exportList() {
+        const json = JSON.stringify(gifts, null, 4);
+        console.log(json);
+        alert("Código gerado no Console (F12) e copiado para sua área de transferência!");
+        navigator.clipboard.writeText(json);
+    }
+
+    function openAddModal() { document.getElementById('addModal').style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function openTab(e, n) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(n).classList.add('active');
+        e.currentTarget.classList.add('active');
+    }
+
+    function generatePixModal(i) {
+        const g = gifts[i];
+        document.getElementById('modalGiftName').innerText = g.name;
+        const payload = generatePixPayload(MINHA_CHAVE_PIX, NOME_BENEFICIARIO, CIDADE_BENEFICIARIO, parseFloat(g.price), g.name);
+        document.getElementById('qrcode').innerHTML = "";
+        new QRCode(document.getElementById("qrcode"), { text: payload, width: 150, height: 150 });
+        document.getElementById('pixCode').innerText = payload;
+        document.getElementById('pixModal').style.display = 'flex';
+    }
+    function generateCartaoModal(i) {
+        const g = gifts[i];
+        const link = g.link_cartao;
+        document.getElementById('cartaoGiftName').innerText = g.name + " - R$ " + parseFloat(g.price).toFixed(2);
+        document.getElementById('btnLinkCartao').href = link;
+        document.getElementById('txtLinkCartao').innerText = link;
+        document.getElementById('cartaoModal').style.display = 'flex';
+    }
+
+
+    function copyPix() { navigator.clipboard.writeText(document.getElementById('pixCode').innerText); alert("Pix copiado!"); }
+
+    function generatePixPayload(key, name, city, amount, desc) {
+        const strTrim = (s) => s.substring(0, 25).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+        const format = (id, val) => id + String(val.length).padStart(2, '0') + val;
+        const info = format('00', 'br.gov.bcb.pix') + format('01', key);
+        let p = format('00', '01') + format('26', info) + format('52', '0000') + format('53', '986') + 
+                format('54', amount.toFixed(2)) + format('58', 'BR') + format('59', strTrim(name)) + 
+                format('60', strTrim(city)) + format('62', format('05', strTrim(desc).replace(/\s/g, ''))) + "6304";
+        const crc = (d) => {
+            let r = 0xFFFF;
+            for (let i = 0; i < d.length; i++) {
+                r ^= d.charCodeAt(i) << 8;
+                for (let j = 0; j < 8; j++) r = (r & 0x8000) ? (r << 1) ^ 0x1021 : r << 1;
+            }
+            return (r & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+        };
+        return p + crc(p);
+    }
+    gifts.sort(() => Math.random() - 0.5);
+    renderGifts();
+</script>
+
+</body>
+</html>
