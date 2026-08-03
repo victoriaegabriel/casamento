@@ -506,7 +506,9 @@
             .toUpperCase();
         const format = (id, val) =>
           id + String(val.length).padStart(2, "0") + val;
-        const info = format("00", "br.gov.bcb.pix") + format("01", key);
+        const pixKey = /^\d{11}$/.test(key) ? `+55${key}` : key;
+
+        const info = format("00", "br.gov.bcb.pix") + format("01", pixKey);
         let p =
           format("00", "01") +
           format("26", info) +
