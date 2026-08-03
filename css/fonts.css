@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "VictoriaGabriel";
+  src: url("../fonts/Wonderful Day.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "VictoriaGabriel2";
+  src: url("../fonts/Meichic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}

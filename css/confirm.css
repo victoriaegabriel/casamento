@@ -1,0 +1,118 @@
+#telefoneLabel {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+#telefoneFinal {
+  width: 180px;
+}
+
+.status-msg {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.convite-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 18px;
+
+  margin: 12px 0;
+
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.convite-card:hover {
+  transform: translateY(-3px);
+
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.convite-icon {
+  font-size: 34px;
+}
+
+.convite-info {
+  flex: 1;
+}
+
+.convite-nome {
+  font-size: 20px;
+
+  font-weight: bold;
+}
+
+.convite-desc {
+  opacity: 0.8;
+
+  font-size: 14px;
+}
+
+.guest-card {
+  margin: 18px 0;
+
+  padding: 18px;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.guest-name {
+  font-weight: bold;
+
+  margin-bottom: 12px;
+}
+
+.guest-buttons {
+  display: flex;
+
+  gap: 10px;
+}
+
+.guest-btn {
+  flex: 1;
+
+  padding: 12px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  transition: 0.25s;
+}
+
+.guest-btn:hover {
+  transform: scale(1.03);
+}
+
+.selected-green {
+  background: #28a745 !important;
+
+  color: white;
+}
+
+.selected-red {
+  background: #dc3545 !important;
+
+  color: white;
+}
+
+.loading {
+  opacity: 0.8;
+  font-style: italic;
+}

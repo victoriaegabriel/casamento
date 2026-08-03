@@ -1,0 +1,72 @@
+.botao-musica {
+  position: fixed;
+
+  right: 20px;
+  bottom: 20px;
+
+  z-index: 2000;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: var(--glass-bg);
+
+  backdrop-filter: blur(10px);
+
+  border: 1px solid var(--glass-border);
+
+  color: var(--text-color);
+
+  padding: 12px 20px;
+
+  border-radius: 25px;
+
+  font-family: inherit;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* PLAY */
+.icone-musica {
+  width: 0;
+  height: 0;
+
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+
+  border-left: 13px solid var(--text-color);
+}
+
+/* PAUSE */
+.botao-musica.tocando .icone-musica {
+  width: 12px;
+  height: 16px;
+
+  border: none;
+
+  background: linear-gradient(
+    to right,
+    var(--text-color) 0 35%,
+    transparent 35% 65%,
+    var(--text-color) 65% 100%
+  );
+}
+
+/* PAUSE */
+.botao-musica.tocando .icone-musica {
+  width: 13px;
+  height: 16px;
+
+  border: none;
+
+  background: linear-gradient(
+    to right,
+    var(--text-color) 0 35%,
+    transparent 35% 65%,
+    var(--text-color) 65% 100%
+  );
+}

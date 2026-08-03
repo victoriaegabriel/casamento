@@ -1,0 +1,32 @@
+/* Contagem Regressiva */
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 30px auto;
+  max-width: 500px;
+}
+
+.countdown-box {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--glass-border);
+  border-radius: 15px;
+  padding: 15px;
+  min-width: 75px;
+  flex: 1;
+}
+
+.countdown-number {
+  font-size: 1.8rem;
+  font-weight: 600;
+  font-family: "Le Major", "Playfair Display", serif;
+  color: var(--accent-color);
+}
+
+.countdown-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  color: var(--text-color);
+}

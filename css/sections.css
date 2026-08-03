@@ -1,0 +1,287 @@
+.section-block {
+  padding: 50px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  scroll-margin-top: 50px;
+}
+
+#home,
+#historia,
+#cerimonia,
+#recepcao,
+#presentes {
+  scroll-margin-top: 50px;
+}
+
+.section-block:last-of-type {
+  border-bottom: none;
+}
+
+h2 {
+  font-family: "VictoriaGabriel", sans-serif;
+  font-size: 5rem;
+  font-weight: 100;
+  margin-bottom: 15px;
+  color: var(--accent-color);
+}
+
+.intro-box {
+  text-align: center;
+  line-height: 1.8;
+  font-size: 1.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Estrutura de Fotos + Texto */
+.content-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .content-flex {
+    flex-direction: row;
+    text-align: left;
+  }
+  .content-flex.reverse {
+    flex-direction: row-reverse;
+  }
+  .content-flex .text-side {
+    flex: 1;
+  }
+  .content-flex .image-side {
+    flex: 1;
+  }
+}
+
+.image-side img {
+  width: 100%;
+  max-width: 380px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.text-side p {
+  line-height: 1.7;
+  margin-bottom: 15px;
+}
+
+.historia-top {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.historia-top img {
+  width: 45%;
+  max-width: 450px;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+/* Texto */
+.historia-texto {
+  max-width: 900px;
+  margin: 0 auto 50px;
+  text-align: center;
+  line-height: 1.9;
+  font-size: 1.5rem;
+}
+
+/* Galeria */
+.historia-galeria {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding: 10px 0;
+  scroll-behavior: smooth;
+}
+
+.historia-galeria::-webkit-scrollbar {
+  height: 8px;
+}
+
+.historia-galeria::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 10px;
+}
+
+.historia-galeria img {
+  width: 250px;
+  height: 330px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.historia-galeria img:hover {
+  transform: scale(1.05);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .historia-top {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .historia-top img {
+    width: 90%;
+  }
+
+  .historia-texto {
+    padding: 0 20px;
+    text-align: justify;
+  }
+
+  .historia-galeria img {
+    width: 180px;
+    height: 250px;
+  }
+}
+
+.cerimonia-imagem {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.cerimonia-imagem img {
+  width: 100%;
+  max-width: 900px;
+  max-height: 550px;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+  margin: 0 auto;
+}
+.dress-code-imagem {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.dress-code-imagem img {
+  width: 100%;
+  max-width: 400px;
+  max-height: 900px;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+  margin: 0 auto;
+}
+
+.legenda-imagem {
+  margin-top: 12px;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.cerimonia-texto {
+  max-width: 850px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.cerimonia-texto p {
+  margin-bottom: 18px;
+  line-height: 1.8;
+}
+
+.rsvp-container {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.5rem;
+}
+
+.rsvp-input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-size: 16px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.rsvp-btn {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.rsvp-btn:hover {
+  background: var(--accent-dark);
+}
+
+.rsvp-results {
+  margin-top: 20px;
+}
+
+.guest-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.final-imagem {
+  width: 100%;
+  height: 100vh;
+
+  position: relative;
+  overflow: hidden;
+  margin-top: 100px;
+}
+
+/* IMAGEM */
+.final-background {
+  position: absolute;
+  inset: 0;
+
+  background-image: url("../imgs/5.jpeg");
+  background-size: cover;
+  background-position: center;
+
+  z-index: 0;
+}
+
+/* FADE NO TOPO */
+.final-imagem::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 40%;
+
+  background: linear-gradient(to bottom, #f5f3f2, transparent);
+
+  z-index: 1;
+}

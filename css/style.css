@@ -1,0 +1,103 @@
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.22);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --text-color: #000000;
+  --accent-color: #697a45;
+  --accent-dark: #3d5919;
+  --white-pure: #fffaf7;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+body {
+  font-family: "VictoriaGabriel2", sans-serif;
+  font-weight: 700;
+  min-height: 100vh;
+  background: #f5f3f2;
+  display: block;
+  padding: 0;
+  color: var(--text-color);
+}
+.container {
+  width: 100%;
+  max-width: none;
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  border-radius: 0;
+  padding: 40px 30px;
+  box-shadow: none;
+  text-align: center;
+  position: relative;
+}
+
+.titulo-principal {
+  width: 100%;
+
+  text-align: center;
+  font-size: clamp(50px, 8vw, 150px);
+
+  font-weight: normal;
+}
+
+.separador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 5px auto 40px; /* mais perto do título */
+
+  width: 300px; /* linha maior */
+}
+
+.separador::before,
+.separador::after {
+  content: "";
+
+  height: 1px;
+
+  flex: 1;
+
+  background: var(--accent-color);
+
+  opacity: 0.5;
+}
+
+.separador span {
+  width: 8px;
+  height: 8px;
+
+  margin: 0 10px;
+
+  background: var(--accent-color);
+
+  transform: rotate(45deg);
+
+  display: block;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.8rem;
+  }
+  h2 {
+    font-size: 2.2rem;
+  }
+  .countdown-container {
+    width: 100%;
+    gap: 8px;
+  }
+  .countdown-box {
+    padding: 10px;
+    min-width: 60px;
+  }
+  .countdown-number {
+    font-size: 1.4rem;
+  }
+  .container {
+    padding: 25px 15px;
+  }
+}

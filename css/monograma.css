@@ -1,0 +1,40 @@
+.monograma-inicial-container {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.monograma-inicial-container img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.monograma-final-container {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.monograma-final-container img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.monograma-container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.monograma-container img {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  opacity: 1;
+}
