@@ -13,10 +13,10 @@
 }
 
 .monograma-final-container {
-  position: absolute;
-  top: 50px;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  margin-bottom: -60px;
+  position: relative;
   z-index: 2;
 }
 
