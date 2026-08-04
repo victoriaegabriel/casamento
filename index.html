@@ -31,16 +31,6 @@
       </div>
     </section>
     <div class="container">
-      <!-- MENU DE NAVEGAÇÃO SUPERIOR -->
-      <nav class="nav-menu">
-        <a href="#topo" class="nav-link">Home</a>
-        <a href="#historia" class="nav-link">Casal</a>
-        <a href="#cerimonia" class="nav-link">Cerimônia</a>
-        <a href="#dress-code" class="nav-link">Dress code</a>
-        <a href="#confirmacao" class="nav-link">Confirmação</a>
-        <a href="#presentes" class="nav-link">Presentes</a>
-      </nav>
-
       <!-- Monograma dentro da imagem -->
 
       <div class="hero-content">
@@ -165,7 +155,7 @@
           <span></span>
         </div>
         <div class="dress-code-imagem">
-          <img src="./imgs/dress-code-3.png" alt="" />
+          <img src="./imgs/dresscode-horizontal.png" alt="" />
         </div>
         <div class="cerimonia-texto">
           <p>
@@ -202,15 +192,6 @@
 
             <div id="areaConfirmacao">
               <div id="listaConvidados"></div>
-
-              <p id="telefoneLabel"></p>
-
-              <input
-                id="telefoneFinal"
-                class="rsvp-input"
-                maxlength="4"
-                placeholder="Digite aqui!"
-              />
 
               <button
                 id="botaoConfirmar"
@@ -254,10 +235,10 @@
         </div>
       </section>
     </div>
+    <div class="monograma-final-container">
+      <img src="./imgs/monograma.png" alt="Monograma dos noivos" />
+    </div>
     <section class="final-imagem">
-      <div class="monograma-final-container">
-        <img src="./imgs/monograma.png" alt="Monograma dos noivos" />
-      </div>
       <div class="final-background"></div>
     </section>
 
@@ -390,7 +371,7 @@
 
     <script>
       // Configurações do PIX
-      const API = "https://backend-casamentos.onrender.com";
+      const API = "http://127.0.0.1:8000";
       const sheet = "10Et-M73v9ssz9Q5RUMR6LlYcuzzeFTsqB8zLHM_ez3s";
 
       const respostas = {};
@@ -644,7 +625,6 @@
         conviteDiv.classList.add("hidden");
 
         document.getElementById("listaConvidados").innerHTML = "";
-        document.getElementById("telefoneLabel").innerHTML = "";
         document.getElementById("mensagem").innerHTML = "";
 
         let pessoas = [];
@@ -717,7 +697,7 @@
         let convite;
         try {
           const response = await fetch(
-            `${API}/convite?principal=${encodeURIComponent(principal)}&sheet=${sheet}`,
+            `${API}/convite_sem_numero?principal=${encodeURIComponent(principal)}&sheet=${sheet}`,
           );
           convite = await response.json();
         } catch (erro) {
@@ -732,8 +712,6 @@
         principalAtual = principal;
         pessoas = convite.pessoas;
         document.getElementById("convite").classList.remove("hidden");
-        document.getElementById("telefoneLabel").innerHTML =
-          `Digite os 4 últimos números do telefone:<br><strong>${convite.telefone}</strong>`;
         const lista = document.getElementById("listaConvidados");
 
         lista.innerHTML = "";
@@ -829,18 +807,8 @@
           });
         }
 
-        const telefone = document.getElementById("telefoneFinal").value.trim();
-
-        if (telefone.length !== 4) {
-          document.getElementById("mensagem").innerHTML =
-            "⚠️ Digite os 4 últimos números do telefone.";
-
-          return;
-        }
-
         const body = {
           principal: principalAtual,
-          telefone_final: telefone,
           pessoas: confirmacoes,
           sheet: sheet,
         };
@@ -849,7 +817,7 @@
 
         let resposta;
         try {
-          const response = await fetch(`${API}/confirmar`, {
+          const response = await fetch(`${API}/confirmar_sem_telefone`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
