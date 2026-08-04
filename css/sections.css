@@ -27,7 +27,7 @@ h2 {
 .intro-box {
   text-align: center;
   line-height: 1.8;
-  font-size: 1.5rem;
+  font-size: 1rem;
   max-width: 700px;
   margin: 0 auto;
 }
@@ -94,7 +94,7 @@ h2 {
   margin: 0 auto 50px;
   text-align: center;
   line-height: 1.9;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 /* Galeria */
@@ -192,7 +192,7 @@ h2 {
   max-width: 850px;
   margin: 0 auto;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .cerimonia-texto p {
@@ -203,7 +203,7 @@ h2 {
 .rsvp-container {
   max-width: 700px;
   margin: 0 auto;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .rsvp-input {
