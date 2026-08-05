@@ -1,0 +1,196 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  opacity: 1;
+  visibility: visible;
+
+  transition:
+    opacity 0.8s ease,
+    visibility 0.8s ease;
+}
+
+.overlay.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+.envelope {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: #d8c2a3;
+
+  overflow: hidden;
+  transition:
+    transform 0.9s ease,
+    opacity 0.9s ease,
+    filter 0.9s ease;
+}
+.letter {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #e8d6bf;
+
+  z-index: 2;
+}
+.letter h1 {
+  transform: translateY(200px);
+  transition:
+    opacity 0.6s ease,
+    filter 0.6s ease;
+  font-family: "VictoriaGabriel", sans-serif;
+  font-weight: 200;
+  font-size: 6rem;
+}
+
+.envelope.open .letter h1 {
+  opacity: 0;
+  filter: blur(6px);
+}
+.flap-shadow {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 53%;
+
+  background: rgba(80, 50, 20, 0.35);
+
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+
+  transform: translateY(25px) scale(0.98);
+
+  filter: blur(22px);
+
+  opacity: 0.8;
+
+  z-index: 4;
+}
+
+.flap {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 53%;
+
+  background: #e8d6bf;
+
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+
+  transform-origin: top;
+
+  transition: 1s;
+
+  z-index: 5;
+}
+.seal {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  width: 130px;
+  height: 130px;
+
+  border: none;
+
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      rgba(255, 255, 255, 0.25),
+      transparent 25%
+    ),
+    radial-gradient(circle at 70% 80%, rgba(0, 0, 0, 0.35), transparent 45%),
+    #697a45;
+
+  cursor: pointer;
+
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* borda de cera irregular */
+  border-radius: 53% 47% 55% 45% / 46% 55% 45% 54%;
+
+  box-shadow:
+    inset 4px 5px 8px rgba(255, 255, 255, 0.25),
+    inset -8px -10px 12px rgba(0, 0, 0, 0.35),
+    0 12px 25px rgba(0, 0, 0, 0.35);
+
+  filter: saturate(1.1);
+
+  transition: 0.5s;
+  overflow: hidden;
+}
+.seal::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 18px;
+
+  background: rgba(0, 0, 0, 0.18);
+
+  opacity: 0.6;
+
+  filter: blur(12px);
+
+  border-radius: 50%;
+
+  z-index: -1;
+}
+
+.seal img {
+  width: 68px;
+
+  opacity: 0.75;
+
+  filter: brightness(0.55) contrast(1.4);
+
+  mix-blend-mode: multiply;
+
+  transform: translateY(2px);
+
+  /* sombra interna simulando relevo */
+  filter: drop-shadow(2px 2px 1px rgba(255, 255, 255, 0.25))
+    drop-shadow(-2px -2px 2px rgba(0, 0, 0, 0.45));
+}
+.envelope.open .seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2);
+}
+.envelope.open .flap {
+  transform: rotateX(180deg);
+}
+.envelope.open.finish {
+  transform: scale(0.92);
+  opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .letter h1 {
+    font-size: 3.8rem;
+    line-height: 1;
+  }
+
+  .letter h1 span {
+    font-size: 1.8rem;
+  }
+}

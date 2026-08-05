@@ -22,8 +22,23 @@
     <link rel="stylesheet" href="./css/menu.css" />
     <link rel="stylesheet" href="./css/confirm.css" />
     <link rel="stylesheet" href="./css/gifts.css" />
+    <link rel="stylesheet" href="./css/overlay.css" />
   </head>
   <body id="topo">
+    <div id="overlay" class="overlay">
+      <div id="envelope" class="envelope">
+        <div class="flap-shadow"></div>
+        <div class="flap"></div>
+
+        <div class="letter">
+          <h1>Victoria e Gabriel</h1>
+        </div>
+
+        <button id="seal" class="seal">
+          <img src="./imgs/monograma.png" />
+        </button>
+      </div>
+    </div>
     <section id="home" class="hero">
       <div class="hero-background"></div>
       <div class="monograma-inicial-container">
@@ -421,7 +436,7 @@
                         <span class="gift-price">R$ ${parseFloat(g.preco).toFixed(2)}</span>
                         <div class="gift-buttons">
                             <button class="btn-gift" onclick="generatePixModal(${i})">Pix</button>
-                            <button class="btn-gift" onclick="gerarPagamentoCartao(${i})">
+                            <button class="btn-gift" onclick="generateCartaoModal(${i})">
                                 Cartão
                             </button>
                         </div>
@@ -932,10 +947,42 @@
 
       atualizarBotaoMusica();
 
+      const overlay = document.getElementById("overlay");
+      const btnAbrir = document.getElementById("seal");
+
+      btnAbrir.addEventListener("click", async () => {
+        await musica.play().catch(() => {});
+
+        envelope.classList.add("open");
+
+        setTimeout(() => {
+          envelope.classList.add("finish");
+        }, 900);
+
+        setTimeout(() => {
+          overlay.remove();
+        }, 1800);
+      });
+
       // Inicialização da página
       window.onload = function () {
         countdown();
         renderGifts();
+      };
+
+      const seal = document.getElementById("seal");
+      const envelope = document.getElementById("envelope");
+
+      seal.onclick = () => {
+        envelope.classList.add("open");
+
+        setTimeout(() => {
+          overlay.classList.add("hide");
+        }, 1800);
+
+        setTimeout(() => {
+          overlay.remove();
+        }, 2600);
       };
     </script>
   </body>
