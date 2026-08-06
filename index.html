@@ -27,16 +27,21 @@
   <body id="topo">
     <div id="overlay" class="overlay">
       <div id="envelope" class="envelope">
-        <div class="flap-shadow"></div>
-        <div class="flap"></div>
+        <img
+          src="./imgs/textura-de-papel.png"
+          class="envelope-full"
+          alt="Envelope"
+        />
 
-        <div class="letter">
-          <h1>Victoria e Gabriel</h1>
+        <img src="./imgs/baixo.png" class="envelope-back" alt="Envelope" />
+
+        <div class="envelope-flap">
+          <img src="./imgs/cima.png" class="flap-img" alt="Aba do envelope" />
+
+          <button id="sealBtn" class="seal-btn" aria-label="Abrir convite">
+            <img src="./imgs/selo.png" class="seal-img" alt="Selo" />
+          </button>
         </div>
-
-        <button id="seal" class="seal">
-          <img src="./imgs/monograma.png" />
-        </button>
       </div>
     </div>
     <section id="home" class="hero">
@@ -947,43 +952,31 @@
 
       atualizarBotaoMusica();
 
-      const overlay = document.getElementById("overlay");
-      const btnAbrir = document.getElementById("seal");
-
-      btnAbrir.addEventListener("click", async () => {
-        await musica.play().catch(() => {});
-
-        envelope.classList.add("open");
-
-        setTimeout(() => {
-          envelope.classList.add("finish");
-        }, 900);
-
-        setTimeout(() => {
-          overlay.remove();
-        }, 1800);
-      });
-
       // Inicialização da página
       window.onload = function () {
         countdown();
         renderGifts();
       };
 
-      const seal = document.getElementById("seal");
+      const overlay = document.getElementById("overlay");
       const envelope = document.getElementById("envelope");
+      const sealBtn = document.getElementById("sealBtn");
 
-      seal.onclick = () => {
+      sealBtn.addEventListener("click", async (e) => {
+        e.stopPropagation();
+
+        await musica.play().catch(() => {});
+
         envelope.classList.add("open");
 
         setTimeout(() => {
           overlay.classList.add("hide");
-        }, 1800);
+        }, 1000);
 
         setTimeout(() => {
           overlay.remove();
-        }, 2600);
-      };
+        }, 2000);
+      });
     </script>
   </body>
 </html>
