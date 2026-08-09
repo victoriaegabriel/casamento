@@ -98,12 +98,20 @@ h2 {
 }
 
 /* Galeria */
+.historia-galeria-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .historia-galeria {
   display: flex;
   gap: 15px;
   overflow-x: auto;
-  padding: 10px 0;
+  overflow-y: hidden;
+  padding: 10px 0 15px;
   scroll-behavior: smooth;
+  margin-bottom: 30px;
 }
 
 .historia-galeria::-webkit-scrollbar {
@@ -116,8 +124,8 @@ h2 {
 }
 
 .historia-galeria img {
-  width: 250px;
-  height: 330px;
+  width: 450px;
+  height: 594px;
   object-fit: cover;
   border-radius: 12px;
   flex-shrink: 0;
@@ -284,4 +292,133 @@ h2 {
   background: linear-gradient(to bottom, #f5f3f2, transparent);
 
   z-index: 1;
+}
+
+/* ==========================================
+   FOTOS EXTRAS DENTRO DA HISTÓRIA
+========================================== */
+
+.historia-extra {
+  width: 100%;
+  max-width: 900px;
+  margin: 80px auto 0;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 50px;
+
+  align-items: stretch;
+
+  box-sizing: border-box;
+}
+
+/* IMAGEM */
+
+.historia-extra-imagem {
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.historia-extra-imagem img {
+  display: block;
+
+  width: 100%;
+  max-width: 380px;
+
+  height: 100%;
+  min-height: 350px;
+
+  object-fit: cover;
+
+  border-radius: 15px;
+  border: 1px solid var(--glass-border);
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+  box-sizing: border-box;
+  aspect-ratio: 1 / 1;
+}
+
+/* TEXTO */
+
+.historia-extra-texto {
+  width: 100%;
+  max-width: 380px;
+
+  box-sizing: border-box;
+
+  line-height: 1.9;
+  font-size: 1rem;
+
+  text-align: left;
+
+  display: flex;
+  align-items: center;
+
+  margin: 0;
+}
+
+.historia-extra-texto p {
+  margin: 0;
+}
+.historia-extra + .historia-extra + p {
+  margin-top: 60px;
+}
+/* ==========================================
+   SEGUNDO BLOCO
+========================================== */
+
+.historia-extra-reverse .historia-extra-imagem {
+  order: 2;
+  justify-content: flex-end;
+}
+
+.historia-extra-reverse .historia-extra-texto {
+  order: 1;
+}
+
+/* ==========================================
+   ESPAÇAMENTO
+========================================== */
+
+.historia-extra + .historia-extra {
+  margin-top: 90px;
+}
+
+/* ==========================================
+   CELULAR
+========================================== */
+
+@media (max-width: 768px) {
+  .historia-extra,
+  .historia-extra-reverse {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .historia-extra-imagem,
+  .historia-extra-reverse .historia-extra-imagem {
+    width: 90%;
+    justify-content: center;
+  }
+
+  .historia-extra-imagem img {
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .historia-extra-texto,
+  .historia-extra-reverse .historia-extra-texto {
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    margin: 0;
+  }
 }
