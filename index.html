@@ -343,7 +343,7 @@
         <p
           id="txtLinkCartao"
           style="
-            font-size: 0.6rem;
+            font-size: 1rem;
             word-break: break-all;
             background: #f4f4f4;
             padding: 10px;
@@ -486,11 +486,30 @@
       function generateCartaoModal(i) {
         const g = gifts[i];
         presenteAtual = g;
-        const link = g.link_cartao;
+
+        const link = (g.link_cartao || "").trim();
+        const btnLinkCartao = document.getElementById("btnLinkCartao");
+
         document.getElementById("cartaoGiftName").innerText =
           g.nome + " - R$ " + parseFloat(g.preco).toFixed(2);
-        document.getElementById("btnLinkCartao").href = link;
-        document.getElementById("txtLinkCartao").innerText = link;
+
+        if (link.toLowerCase() === "esgotado") {
+          btnLinkCartao.removeAttribute("href");
+          btnLinkCartao.removeAttribute("target");
+          btnLinkCartao.classList.add("disabled");
+          btnLinkCartao.innerText = "Esgotado";
+
+          document.getElementById("txtLinkCartao").innerText =
+            "Presente esgotado";
+        } else {
+          btnLinkCartao.href = link;
+          btnLinkCartao.target = "_blank";
+          btnLinkCartao.classList.remove("disabled");
+          btnLinkCartao.innerText = "Ir para Pagamento";
+
+          document.getElementById("txtLinkCartao").innerText = link;
+        }
+
         document.getElementById("cartaoModal").style.display = "flex";
       }
 
