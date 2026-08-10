@@ -97,6 +97,12 @@
             <img src="./imgs/3.jpeg" alt="" />
             <img src="./imgs/6.jpeg" alt="" />
             <img src="./imgs/7.jpeg" alt="" />
+            <img src="./imgs/8.jpeg" alt="" />
+            <img src="./imgs/9.jpeg" alt="" />
+            <img src="./imgs/10.jpeg" alt="" />
+            <img src="./imgs/11.jpeg" alt="" />
+            <img src="./imgs/12.jpeg" alt="" />
+            <img src="./imgs/13.jpeg" alt="" />
           </div>
         </div>
 
@@ -1000,6 +1006,85 @@
           overlay.remove();
         }, 2000);
       });
+      const galeria = document.querySelector(".historia-galeria");
+
+      let pausado = false;
+      let timeoutProximaFoto = null;
+      let retomarTimeout = null;
+
+      function obterLarguraItem() {
+        const foto = galeria.querySelector("img");
+        if (!foto) return 0;
+        const gap = parseFloat(getComputedStyle(galeria).gap) || 0;
+        return foto.offsetWidth + gap;
+      }
+
+      function passarParaProximaFoto() {
+        if (pausado) return;
+
+        const larguraItem = obterLarguraItem();
+        if (!larguraItem) return;
+
+        const maxScroll = galeria.scrollWidth - galeria.clientWidth;
+
+        // Descobre em qual foto a galeria está parada atualmente (arredondado)
+        const indiceAtual = Math.round(galeria.scrollLeft / larguraItem);
+        let proximoIndice = indiceAtual + 1;
+
+        // Se chegou ao fim ou passou do limite, volta para o início
+        if (galeria.scrollLeft >= maxScroll - 5) {
+          proximoIndice = 0;
+        }
+
+        // Rola perfeitamente para a foto calculada
+        galeria.scrollTo({
+          left: proximoIndice * larguraItem,
+          behavior: "smooth",
+        });
+
+        agendarProxima();
+      }
+
+      function agendarProxima() {
+        clearTimeout(timeoutProximaFoto);
+        timeoutProximaFoto = setTimeout(() => {
+          passarParaProximaFoto();
+        }, 3500); // 1s de transição + 2.5s parada
+      }
+
+      function pausarEAgendarRetomo() {
+        pausado = true;
+        clearTimeout(timeoutProximaFoto);
+        clearTimeout(retomarTimeout);
+
+        retomarTimeout = setTimeout(() => {
+          pausado = false;
+          passarParaProximaFoto();
+        }, 5000);
+      }
+
+      // Eventos de toque no celular
+      galeria.addEventListener(
+        "touchstart",
+        () => {
+          pausado = true;
+          clearTimeout(timeoutProximaFoto);
+          clearTimeout(retomarTimeout);
+        },
+        { passive: true },
+      );
+
+      galeria.addEventListener("touchend", pausarEAgendarRetomo);
+
+      // Pausa se o usuário usar o scroll (mouse ou barra de rolagem)
+      galeria.addEventListener("wheel", pausarEAgendarRetomo, {
+        passive: true,
+      });
+
+      // Inicia após 2 segundos
+      setTimeout(() => {
+        agendarProxima();
+      }, 2000);
     </script>
   </body>
 </html>
