@@ -28,7 +28,7 @@
     <div id="overlay" class="overlay">
       <div id="envelope" class="envelope">
         <img
-          src="./imgs/textura-de-papel.png"
+          src="./imgs/textura-de-papel.jpeg"
           class="envelope-full"
           alt="Envelope"
         />
@@ -195,6 +195,30 @@
         </div>
       </section>
 
+      <!-- SEÇÃO LISTA DE PRESENTES -->
+      <section id="presentes" class="section-block">
+        <h2>Lista de Presentes</h2>
+        <div class="separador">
+          <span></span>
+        </div>
+        <p
+          style="
+            max-width: 600px;
+            margin: 0 auto 20px;
+            line-height: 1.6;
+            font-size: 1rem;
+          "
+        >
+          Caso deseje nos presentear, escolhemos cotas de presentes simbólicos e
+          divertidos que nos ajudarão em nossa lua de mel e no início de nossa
+          vida juntos.
+        </p>
+
+        <div class="gift-grid" id="giftGrid">
+          <!-- Os cards de presentes serão gerados dinamicamente aqui -->
+        </div>
+      </section>
+
       <section id="confirmacao" class="section-block">
         <h2>Confirmação de Presença</h2>
         <div class="separador">
@@ -238,30 +262,6 @@
           </div>
 
           <div id="mensagem" class="status-msg"></div>
-        </div>
-      </section>
-
-      <!-- SEÇÃO LISTA DE PRESENTES -->
-      <section id="presentes" class="section-block">
-        <h2>Lista de Presentes</h2>
-        <div class="separador">
-          <span></span>
-        </div>
-        <p
-          style="
-            max-width: 600px;
-            margin: 0 auto 20px;
-            line-height: 1.6;
-            font-size: 1rem;
-          "
-        >
-          Caso deseje nos presentear, escolhemos cotas de presentes simbólicos e
-          divertidos que nos ajudarão em nossa lua de mel e no início de nossa
-          vida juntos.
-        </p>
-
-        <div class="gift-grid" id="giftGrid">
-          <!-- Os cards de presentes serão gerados dinamicamente aqui -->
         </div>
       </section>
     </div>
@@ -432,31 +432,38 @@
       }
       carregarPresentes();
 
-      // Embaralha e Renderiza os Presentes
       function renderGifts() {
         const grid = document.getElementById("giftGrid");
         grid.innerHTML = "";
-        gifts.sort(() => Math.random() - 0.5);
-        gifts.forEach((g, i) => {
+
+        const primeiro = gifts[0];
+        const restantes = gifts.slice(1);
+
+        // Embaralha apenas os itens depois do primeiro
+        restantes.sort(() => Math.random() - 0.5);
+
+        const giftsOrdenados = [primeiro, ...restantes];
+
+        giftsOrdenados.forEach((g, i) => {
           const card = document.createElement("div");
           card.className = "gift-card";
           card.innerHTML = `
-                <img src="${g.imagem}" class="gift-image" alt="${g.nome}">
-                <div class="gift-content">
-                    <div>
-                        <p class="gift-name">${g.nome}</p>
-                        <p class="gift-desc">${g.descricao}</p>
-                    </div>
-                    <div class="gift-footer">
-                        <span class="gift-price">R$ ${parseFloat(g.preco).toFixed(2)}</span>
-                        <div class="gift-buttons">
-                            <button class="btn-gift" onclick="generatePixModal(${i})">Pix</button>
-                            <button class="btn-gift" onclick="generateCartaoModal(${i})">
-                                Cartão
-                            </button>
-                        </div>
-                    </div>
-                </div>`;
+          <img src="${g.imagem}" class="gift-image" alt="${g.nome}">
+          <div class="gift-content">
+              <div>
+                  <p class="gift-name">${g.nome}</p>
+                  <p class="gift-desc">${g.descricao}</p>
+              </div>
+              <div class="gift-footer">
+                  <span class="gift-price">R$ ${parseFloat(g.preco).toFixed(2)}</span>
+                  <div class="gift-buttons">
+                      <button class="btn-gift" onclick="generatePixModal(${i})">Pix</button>
+                      <button class="btn-gift" onclick="generateCartaoModal(${i})">
+                          Cartão
+                      </button>
+                  </div>
+              </div>
+          </div>`;
           grid.appendChild(card);
         });
       }
