@@ -1,3 +1,4 @@
+/* ===== HERO (ORIGINAL) ===== */
 .hero {
   height: 100vh;
   position: relative;
@@ -8,19 +9,17 @@
   justify-content: center;
 }
 
-/* IMAGEM */
 .hero-background {
   position: absolute;
   inset: 0;
 
-  background-image: url("../imgs/1.jpeg");
+  background-image: url("../imgs/1_test.jpeg");
   background-size: cover;
   background-position: center;
 
   z-index: 0;
 }
 
-/* CAMADA DE FADE */
 .hero::after {
   content: "";
 
@@ -36,7 +35,7 @@
 
   z-index: 1;
 }
-/* TEXTO */
+
 .hero-content {
   position: relative;
   z-index: 2;

@@ -24,7 +24,7 @@
   pointer-events: none;
 }
 
-/* ===== ENVELOPE ===== */
+/* ===== ENVELOPE (PC - Exatamente como no seu código original) ===== */
 .envelope {
   position: relative;
 
@@ -35,6 +35,7 @@
 
   perspective: 1800px;
 }
+
 .envelope-full {
   position: absolute;
   inset: 0;
@@ -51,7 +52,6 @@
   transform: scale(1.06);
 }
 
-/* base */
 .envelope-back {
   position: absolute;
   inset: 0;
@@ -64,7 +64,6 @@
   z-index: 2;
 }
 
-/* aba */
 .envelope-flap {
   position: absolute;
   inset: 0;
@@ -76,6 +75,7 @@
 
   z-index: 5;
 }
+
 .flap-img {
   position: absolute;
   inset: 0;
@@ -89,6 +89,7 @@
 
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.12));
 }
+
 .envelope-full,
 .envelope-back,
 .flap-img {
@@ -101,12 +102,10 @@
   object-fit: cover;
 }
 
-/* abre a aba */
 .envelope.open .envelope-flap {
   transform: rotateX(150deg);
 }
 
-/* ===== SELO ===== */
 .seal-btn {
   position: absolute;
 
@@ -136,21 +135,24 @@
   filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.22));
 }
 
-/* celular */
+/* ===== MODIFICAÇÕES APENAS PARA CELULAR ===== */
 @media (max-width: 768px) {
-  .envelope {
-    width: 96vw;
+  /* No celular o fundo do overlay fica transparente para o hero aparecer */
+  .overlay {
+    background: transparent;
   }
-}
 
-@media (max-width: 768px) {
+  /* Oculta a imagem estática interna da carta no celular */
+  .envelope-full {
+    display: none !important;
+  }
+
   .envelope {
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     aspect-ratio: auto;
   }
 
-  .envelope-full,
   .envelope-back,
   .flap-img {
     object-fit: cover;
@@ -159,5 +161,9 @@
   .seal-btn {
     width: 60%;
     top: 56%;
+  }
+
+  .hero {
+    height: 100dvh;
   }
 }
