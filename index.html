@@ -24,16 +24,19 @@
     <link rel="stylesheet" href="./css/gifts.css" />
     <link rel="stylesheet" href="./css/overlay.css" />
   </head>
-  <body id="topo">
+  <body id="topo" class="no-scroll">
+    <!-- OVERLAY (Apenas a carta por cima do site) -->
     <div id="overlay" class="overlay">
       <div id="envelope" class="envelope">
+        <!-- Imagem do PC: Textura de papel -->
         <img
           src="./imgs/textura-de-papel.jpeg"
           class="envelope-full"
-          alt="Envelope"
+          alt="Envelope Papel"
         />
 
-        <img src="./imgs/baixo.png" class="envelope-back" alt="Envelope" />
+        <!-- Imagem do Celular: Carta vazada (transparente por dentro) -->
+        <img src="./imgs/baixo.png" class="envelope-back" alt="Envelope Base" />
 
         <div class="envelope-flap">
           <img src="./imgs/cima.png" class="flap-img" alt="Aba do envelope" />
@@ -44,6 +47,7 @@
         </div>
       </div>
     </div>
+
     <section id="home" class="hero">
       <div class="hero-background"></div>
       <div class="monograma-inicial-container">
