@@ -310,6 +310,7 @@
           rows="3"
         ></textarea>
         <button
+          id="btnSalvarPix"
           class="btn-gift"
           style="width: 100%; margin-top: 10px"
           onclick="salvarPresente('pix')"
@@ -374,6 +375,7 @@
           rows="3"
         ></textarea>
         <button
+          id="btnSalvarCartao"
           class="btn-gift"
           style="width: 100%; margin-top: 10px"
           onclick="salvarPresente('cartao')"
@@ -481,7 +483,12 @@
       function generatePixModal(i) {
         const g = gifts[i];
         presenteAtual = g;
-        document.getElementById("modalGiftName").innerText = g.nome;
+
+        document.getElementById("presenteNomePix").value = "";
+        document.getElementById("presenteMensagemPix").value = "";
+
+        document.getElementById("modalGiftName").innerText =
+          g.nome + " - R$ " + parseFloat(g.preco).toFixed(2);
         const payload = generatePixPayload(
           MINHA_CHAVE_PIX,
           NOME_BENEFICIARIO,
@@ -503,6 +510,8 @@
       function generateCartaoModal(i) {
         const g = gifts[i];
         presenteAtual = g;
+        document.getElementById("presenteNomeCartao").value = "";
+        document.getElementById("presenteMensagemCartao").value = "";
 
         const link = (g.link_cartao || "").trim();
         const btnLinkCartao = document.getElementById("btnLinkCartao");
@@ -572,8 +581,24 @@
         };
         return p + crc(p);
       }
+      let salvandoPresente = false;
 
       async function salvarPresente(tipoPagamento) {
+        if (salvandoPresente) {
+          return false;
+        }
+        salvandoPresente = true;
+
+        const botao_mensagem =
+          tipoPagamento === "pix"
+            ? document.getElementById("btnSalvarPix")
+            : document.getElementById("btnSalvarCartao");
+
+        if (botao_mensagem) {
+          botao_mensagem.disabled = true;
+          botao_mensagem.innerText = "Salvando...";
+        }
+
         const nome =
           tipoPagamento === "pix"
             ? document.getElementById("presenteNomePix").value
@@ -619,6 +644,12 @@
           console.error(e);
           alert("Erro ao registrar o presente.");
           return false;
+        } finally {
+          salvandoPresente = false;
+          if (botao_mensagem) {
+            botao_mensagem.disabled = false;
+            botao_mensagem.innerText = "Salvar mensagem (Opcional)";
+          }
         }
       }
 
