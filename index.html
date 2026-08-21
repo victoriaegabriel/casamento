@@ -445,31 +445,31 @@
         const primeiro = gifts[0];
         const restantes = gifts.slice(1);
 
-        // Embaralha apenas os itens depois do primeiro
         restantes.sort(() => Math.random() - 0.5);
 
-        const giftsOrdenados = [primeiro, ...restantes];
+        // Atualiza o array original com a nova ordem
+        gifts = [primeiro, ...restantes];
 
-        giftsOrdenados.forEach((g, i) => {
+        gifts.forEach((g, i) => {
           const card = document.createElement("div");
           card.className = "gift-card";
           card.innerHTML = `
-          <img src="${g.imagem}" class="gift-image" alt="${g.nome}">
-          <div class="gift-content">
-              <div>
-                  <p class="gift-name">${g.nome}</p>
-                  <p class="gift-desc">${g.descricao}</p>
-              </div>
-              <div class="gift-footer">
-                  <span class="gift-price">R$ ${parseFloat(g.preco).toFixed(2)}</span>
-                  <div class="gift-buttons">
-                      <button class="btn-gift" onclick="generatePixModal(${i})">Pix</button>
-                      <button class="btn-gift" onclick="generateCartaoModal(${i})">
-                          Cartão
-                      </button>
-                  </div>
-              </div>
-          </div>`;
+            <img src="${g.imagem}" class="gift-image" alt="${g.nome}">
+            <div class="gift-content">
+                <div>
+                    <p class="gift-name">${g.nome}</p>
+                    <p class="gift-desc">${g.descricao}</p>
+                </div>
+                <div class="gift-footer">
+                    <span class="gift-price">R$ ${parseFloat(g.preco).toFixed(2)}</span>
+                    <div class="gift-buttons">
+                        <button class="btn-gift" onclick="generatePixModal(${i})">Pix</button>
+                        <button class="btn-gift" onclick="generateCartaoModal(${i})">
+                            Cartão
+                        </button>
+                    </div>
+                </div>
+            </div>`;
           grid.appendChild(card);
         });
       }
