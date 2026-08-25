@@ -45,6 +45,9 @@
             <img src="./imgs/selo.png" class="seal-img" alt="Selo" />
           </button>
         </div>
+        <p class="tap-instruction">
+          Toque em qualquer lugar para abrir o convite
+        </p>
       </div>
     </div>
 
@@ -1031,10 +1034,10 @@
 
       const overlay = document.getElementById("overlay");
       const envelope = document.getElementById("envelope");
-      const sealBtn = document.getElementById("sealBtn");
 
-      sealBtn.addEventListener("click", async (e) => {
-        e.stopPropagation();
+      overlay.addEventListener("click", async () => {
+        // Faz o botão cilíndrico sumir instantaneamente no clique
+        overlay.classList.add("open-active");
 
         await musica.play().catch(() => {});
 
