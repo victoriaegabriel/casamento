@@ -428,6 +428,7 @@
         MINHA_CHAVE_PIX = dados_noivos.chave_pix;
         NOME_BENEFICIARIO = dados_noivos.nome_completo;
         CIDADE_BENEFICIARIO = dados_noivos.cidade_beneficiario;
+        TIPO_PIX = dados_noivos.tipo;
       }
       carregarDados();
 
@@ -457,24 +458,36 @@
           const card = document.createElement("div");
           card.className = "gift-card";
           card.innerHTML = `
-            <img src="${g.imagem}" class="gift-image" alt="${g.nome}">
-            <div class="gift-content">
-                <div>
-                    <p class="gift-name">${g.nome}</p>
-                    <p class="gift-desc">${g.descricao}</p>
-                </div>
-                <div class="gift-footer">
-                    <span class="gift-price">R$ ${parseFloat(g.preco).toFixed(2)}</span>
-                    <div class="gift-buttons">
-                        <button class="btn-gift" onclick="generatePixModal(${i})">Pix</button>
-                        <button class="btn-gift" onclick="generateCartaoModal(${i})">
-                            Cartão
-                        </button>
-                    </div>
-                </div>
-            </div>`;
+      <img src="${g.imagem}" class="gift-image" alt="${g.nome}">
+      <div class="gift-content">
+          <div>
+              <p class="gift-name">${g.nome}</p>
+              <p class="gift-desc">${g.descricao}</p>
+          </div>
+          <div class="gift-footer">
+              <span class="gift-price">R$ ${parseFloat(g.preco).toFixed(2)}</span>
+              <div class="gift-buttons">
+                  <button class="btn-gift" onclick="generatePixModal(${i})">Pix</button>
+                  <button class="btn-gift" onclick="generateCartaoModal(${i})">
+                      Cartão
+                  </button>
+              </div>
+          </div>
+      </div>`;
           grid.appendChild(card);
         });
+
+        // CORREÇÃO: Se a página foi aberta direto na âncora, força o scroll para o local correto
+        const hash = window.location.hash;
+        if (hash) {
+          // Aguarda a renderização do DOM e o layout estabilizar
+          setTimeout(() => {
+            const targetElement = document.querySelector(hash);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 150);
+        }
       }
 
       // Modal Controle
@@ -497,6 +510,7 @@
           NOME_BENEFICIARIO,
           CIDADE_BENEFICIARIO,
           parseFloat(g.preco),
+          "telefone",
           g.nome,
         );
         document.getElementById("qrcode").innerHTML = "";
@@ -550,7 +564,8 @@
       }
 
       // Algoritmo do PIX Copia e Cola estático
-      function generatePixPayload(key, name, city, amount, desc) {
+      // Algoritmo do PIX Copia e Cola estático
+      function generatePixPayload(key, name, city, amount, type, desc) {
         const strTrim = (s) =>
           s
             .substring(0, 25)
@@ -559,19 +574,36 @@
             .toUpperCase();
         const format = (id, val) =>
           id + String(val.length).padStart(2, "0") + val;
-        const pixKey = /^\d{11}$/.test(key) ? `+55${key}` : key;
 
-        const info = format("00", "br.gov.bcb.pix") + format("01", pixKey);
+        // Trata a chave Pix com base na variável 'type'
+        let formattedKey = String(key).trim();
+        const cleanType = String(type || "")
+          .toLowerCase()
+          .trim();
+
+        if (cleanType.includes("telef") || cleanType.includes("celular")) {
+          const digitsOnly = formattedKey.replace(/\D/g, "");
+          if (digitsOnly.length === 11) {
+            formattedKey = `+55${digitsOnly}`;
+          } else if (digitsOnly.length === 13 && digitsOnly.startsWith("55")) {
+            formattedKey = `+${digitsOnly}`;
+          } else if (!formattedKey.startsWith("+")) {
+            formattedKey = `+${digitsOnly}`;
+          }
+        }
+
+        const info =
+          format("00", "br.gov.bcb.pix") + format("01", formattedKey);
         let p =
           format("00", "01") +
           format("26", info) +
           format("52", "0000") +
           format("53", "986") +
-          format("54", amount.toFixed(2)) +
+          format("54", Number(amount).toFixed(2)) +
           format("58", "BR") +
           format("59", strTrim(name)) +
           format("60", strTrim(city)) +
-          format("62", format("05", strTrim(desc).replace(/\s/g, ""))) +
+          format("62", format("05", "***")) +
           "6304";
         const crc = (d) => {
           let r = 0xffff;
@@ -961,7 +993,8 @@
       }
 
       function countdown() {
-        const weddingDate = new Date("2026-09-17T16:00:00").getTime();
+        // Data: Ano, Mês (8 = Setembro), Dia, Hora, Minuto, Segundo
+        const weddingDate = new Date(2026, 8, 17, 16, 0, 0).getTime();
 
         const daysEl = document.getElementById("days");
         const hoursEl = document.getElementById("hours");
@@ -971,13 +1004,14 @@
         function updateCountdown() {
           const distance = weddingDate - Date.now();
 
-          if (distance <= 0) {
+          // Proteção se a data já passou ou se ocorreu erro de cálculo
+          if (isNaN(distance) || distance <= 0) {
             clearInterval(timer);
 
-            daysEl.textContent = "00";
-            hoursEl.textContent = "00";
-            minutesEl.textContent = "00";
-            secondsEl.textContent = "00";
+            if (daysEl) daysEl.textContent = "00";
+            if (hoursEl) hoursEl.textContent = "00";
+            if (minutesEl) minutesEl.textContent = "00";
+            if (secondsEl) secondsEl.textContent = "00";
 
             return;
           }
@@ -989,11 +1023,14 @@
           const minutes = Math.floor((totalSeconds % 3600) / 60);
           const seconds = totalSeconds % 60;
 
-          daysEl.textContent = String(days).padStart(2, "0");
-          hoursEl.textContent = String(hours).padStart(2, "0");
-          minutesEl.textContent = String(minutes).padStart(2, "0");
-          secondsEl.textContent = String(seconds).padStart(2, "0");
+          if (daysEl) daysEl.textContent = String(days).padStart(2, "0");
+          if (hoursEl) hoursEl.textContent = String(hours).padStart(2, "0");
+          if (minutesEl)
+            minutesEl.textContent = String(minutes).padStart(2, "0");
+          if (secondsEl)
+            secondsEl.textContent = String(seconds).padStart(2, "0");
         }
+
         updateCountdown();
         const timer = setInterval(updateCountdown, 1000);
       }
